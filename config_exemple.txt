@@ -1,0 +1,54 @@
+# ════════════════════════════════════════════════════════════════════════════
+#  Fichier d'arguments du pipeline NRC
+#  Usage :  python run.py --config config_exemple.txt
+#     ou :  python run.py @config_exemple.txt
+#
+#  Deux styles au choix (mélangeables) :
+#     --option valeur        (identique à la ligne de commande)
+#     option = valeur        (les « _ » et les « - » sont équivalents)
+#  Tout ce qui suit « # » est un commentaire. Les lignes vides sont ignorées.
+#  Un argument donné en ligne de commande écrase celui du fichier.
+# ════════════════════════════════════════════════════════════════════════════
+
+# ── Modèle et dataset ─────────────────────────────────────────────────────────
+model     = lenet              # lenet | vgg16 | vgg16_standard | resnet18 | resnet50 | vgg_mini
+dataset   = cifar10            # cifar10 | cifar100 (même format 32x32 RGB, num_classes s'adapte)
+n_filters = 6                  # nombre de filtres conv1 (LeNet uniquement)
+
+# ── Grille de balayage (listes de valeurs séparées par des espaces) ──────────
+eth = 0.25 0.50 0.75 0.90     # seuils d'énergie PCA
+p   = 0.00 0.25 0.50          # proportions de filtres pseudo-randomisés
+
+# ── Ré-entraînement ──────────────────────────────────────────────────────────
+# retrain_after_pca : PCA (p=0) + fine-tuning, PUIS pour chaque p du balayage,
+#   remplacement après coup d'une fraction p des filtres déjà entraînés par du
+#   pseudo-aléatoire, SANS ré-entraîner à nouveau (résultats dans la feuille
+#   Avec_reentrainement_PCA). Utilise epochs_retrain_pca.
+# retrain_after_pseudo : compresse chaque (eth, p) du balayage puis fine-tune
+#   directement avec le p réel (résultats dans Avec_reentrainement_Pseudo).
+#   Utilise epochs_retrain_pseudo.
+retrain_after_pca    = false  # true / false  (oui / non, 1 / 0)
+retrain_after_pseudo = false
+epochs_initial        = 4
+epochs_retrain_pca    = 2     # époques de FT pour retrain_after_pca
+epochs_retrain_pseudo = 2     # époques de FT pour retrain_after_pseudo
+lr         = 0.001
+batch_size = 64
+freeze_fc  = false            # geler les couches Linear pendant le ré-entraînement
+
+# ── Pseudo-randomisation ─────────────────────────────────────────────────────
+seed = 42                     # graine LFSR
+K    = 100                    # candidats par vecteur LFSR
+
+# ── Sorties ──────────────────────────────────────────────────────────────────
+save_models = false
+save_dir    = checkpoints
+output      =                 # vide → résultats_MODELE_DATASET_AAAAMMJJ_HHMMSS.xlsx
+output_dir  = results
+log_dir     = logs
+cache_dir   = cache
+no_cache    = false
+
+# ── Divers ───────────────────────────────────────────────────────────────────
+# device = cuda               # décommenter pour forcer le GPU ou le CPU
+# baseline_only = true        # n'entraîner et n'évaluer que le modèle initial

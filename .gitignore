@@ -1,0 +1,16 @@
+# Virtual environments
+venv/
+venv2/
+
+# Data
+data/
+
+# Model weights (heavy binary files)
+*.pth
+
+# Byte-compiled / cached
+__pycache__/
+*.py[cod]
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
