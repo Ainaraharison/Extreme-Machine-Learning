@@ -1,20 +1,11 @@
-# Portfolio GitHub Pages
+La méthode NRC (Network Random Compression) vise à compresser les réseaux de neurones convolutifs (CNN) en exploitant une ensemble ou une base hybride des filtres de convolutions composée de vecteurs ou des filtres de convolutions issus d’une analyse en composantes principales (PCA) et de vecteurs pseudo-aléatoires générés à partir d’un registre à décalage à rétroaction linéaire (Linear Feedback Shift Register, LFSR). 
 
-Site statique, sans étape de build ni dépendance.
+L’objectif principal est de réduire le nombre de paramètres nécessaires à la représentation des couches convolutives tout en préservant au maximum les performances du réseau. 
 
-## Contenu
+La méthode NRC repose sur une factorisation des couches Conv2d dans une base hybride notée BNRC. Cette base est composée de deux types de vecteurs : 
+- les vecteurs propres conservés issus de PCA, notés Vs, sont stockés explicitement ; 
+- puis certains de ces vecteurs sont remplacés par les vecteurs pseudo- aléatoires, notés Vr, qui peuvent être régénérés à partir d’une graine LFSR de 4 octets. 
 
-Le portfolio est prérempli avec les expériences et projets académiques décrits dans les CV Data Science & IA et Vision & IA embarquée. Les liens de contact renvoient vers le profil GitHub et le profil LinkedIn d’Aina, ainsi que vers son adresse e-mail.
-
-Pour modifier une expérience ou un projet, édite les cartes correspondantes dans `index.html`. Les dépôts des projets académiques n’étant pas indiqués dans les CV, le lien GitHub pointe vers le profil ; remplace-le par un lien de dépôt précis lorsque celui-ci est public.
-
-Les liens Google Fonts servent uniquement à charger les polices ; le site reste lisible si ces polices sont indisponibles. L’adresse e-mail et les profils externes sont visibles publiquement une fois le site publié.
-
-## Publication
-
-1. Ajoute le contenu de ce dossier `docs/` au dépôt GitHub choisi.
-2. Dans le dépôt, ouvre **Settings → Pages**.
-3. Dans **Build and deployment**, sélectionne **Deploy from a branch**, puis la branche `main` et le dossier `/docs`.
-4. Enregistre et attends la publication de GitHub Pages.
-
-Pour un site de profil, le dépôt doit porter le nom `<identifiant-github>.github.io`.
+Deux hyperparamètres principaux permettent de contrôler le compromis entre la précision du modèle et le gain mémoire : 
+- eTh : seuil d’énergie utilisé lors de l’analyse PCA pour déterminer le nombre de dimensions des filtres de convolution s conservées ; 
+- p : proportion des remplacement des vecteurs conservées issus de PCA qui seront remplacées par des vecteurs pseudo-aléatoires.
