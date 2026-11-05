@@ -1,4 +1,4 @@
-Ce repo explique comment ?
+
 La méthode NRC (Network Random Compression) vise à compresser les réseaux de neurones convolutifs (CNN) en exploitant une ensemble ou une base hybride des filtres de convolutions composée de vecteurs ou des filtres de convolutions issus d’une analyse en composantes principales (PCA) et de vecteurs pseudo-aléatoires générés à partir d’un registre à décalage à rétroaction linéaire (Linear Feedback Shift Register, LFSR). 
 
 L’objectif principal est de réduire le nombre de paramètres nécessaires à la représentation des couches convolutives tout en préservant au maximum les performances du réseau. 
